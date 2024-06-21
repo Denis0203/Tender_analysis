@@ -1,0 +1,245 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Статистика {% endblock %}
+
+{% block content %}
+
+  <div class="stats">
+    
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+    <figure class="highcharts-figure">
+      <div id="container"></div>
+        <p class="highcharts-description">
+        </p>
+    </figure>
+
+    <script type="text/javascript">
+
+      Highcharts.chart('container', {
+  chart: {
+    plotBackgroundColor: null,
+    plotBorderWidth: null,
+    plotShadow: false,
+    type: 'pie'
+  },
+  title: {
+    text: 'Отрасли'
+  },
+  tooltip: {
+    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+  },
+  accessibility: {
+    point: {
+      valueSuffix: '%'
+    }
+  },
+  plotOptions: {
+    pie: {
+      allowPointSelect: true,
+      cursor: 'pointer',
+      dataLabels: {
+        enabled: true,
+        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+      }
+    }
+  },
+  series: [{
+    name: 'Отрасли',
+    colorByPoint: true,
+    data: [{
+      name: 'Cтроительство',
+      
+      y: {{pies.0}}
+    }, {
+      name: 'Охрана ',
+      y: {{pies.1}}
+    }, {
+      name: 'Технологическое оборудование',
+      y: {{pies.2}}
+    }, {
+      name: 'Организация мероприятий',
+      y: {{pies.3}}
+    }, {
+      name: 'Продукты питания',
+      y: {{pies.4}}
+    }, {
+      name: 'Санаторное лечение',
+      y: {{pies.5}}
+    }, {
+      name: 'Телекоммуникационное оборудование',
+      y: {{pies.6}}
+    }, {
+      name: 'Интернет и передача данных',
+      y: {{pies.7}}
+    }, {
+      name: 'Проектирование зданий и сооружений',
+      y: {{pies.8}}
+    }, {
+      name:'Медицина',
+      y: {{pies.9}}
+    }]
+  }]
+});
+
+    </script>
+    <div class="korel">
+    <p>Корреляционный анализ:</p>
+    <img src= "{% static 'img/matrix.png' %}" width="350" height="250" alt="Логотип" class="leftimg">
+    
+    <p>1. Продолжительность тендера<br>
+    2. Начальная цена тендера<br>
+    3. Аванс<br>
+    4. Обеспечение<br>
+    5. Количество участников<br>
+    6. Экономия</p>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    {% for category in category_list %}
+    <div class="sta">
+      <h2><a href="{% url 'analysis_page' category.idcategory  %}" >{{category.categorycol}}</a></h2
+      {% for i in dict_cat %}
+        {% if i.0 == category.idcategory %}
+          <p>Всего тендеров: {{i.4}} шт</p>
+          <p>Активных: {{i.1}}%</p>
+          <p>Архивных: {{i.2}}%</p>
+
+        {% endif %}
+      {% endfor %}
+      {% for i in dict_summ %}
+        {% if i.0 == category.categorycol %}
+          <p>Средняя сумма тендера {{i.1}} рублей</p>
+        {% endif %}
+      {% endfor %}
+
+
+
+    </div>
+    {% endfor %}
+  </div>
+
+  <div>
+    
+      
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+    <figure class="highcharts-figure">
+      <div id="container"></div>
+        <p class="highcharts-description">
+        </p>
+    </figure>
+
+   
+
+  <script type="text/javascript">
+
+      Highcharts.chart('container', {
+  chart: {
+    type: 'scatter',
+    zoomType: 'xy'
+  },
+  title: {
+    text: ''
+  },
+  subtitle: {
+    text: ''
+  },
+  xAxis: {
+    title: {
+      enabled: true,
+      text: 'Начальная цена (рублей)'
+    },
+    startOnTick: true,
+    endOnTick: true,
+    showLastLabel: true
+  },
+  yAxis: {
+    title: {
+      text: 'Время (дней)'
+    }
+  },
+  legend: {
+    layout: 'vertical',
+    align: 'left',
+    verticalAlign: 'top',
+    x: 1300,
+    y: 70,
+    floating: true,
+    backgroundColor: Highcharts.defaultOptions.chart.backgroundColor,
+    borderWidth: 1
+  },
+  plotOptions: {
+    scatter: {
+      marker: {
+        radius: 5,
+        states: {
+          hover: {
+            enabled: true,
+            lineColor: 'rgb(100,100,100)'
+          }
+        }
+      },
+      states: {
+        hover: {
+          marker: {
+            enabled: false
+          }
+        }
+      },
+      tooltip: {
+        headerFormat: '<b>{series.name}</b><br>',
+        pointFormat: '{point.x} Рублей, {point.y} Дней'
+      }
+    }
+  },
+  series: [{
+    name: '1',
+    
+    data: {{new_list.0}}
+
+  }, {
+    name: '2',
+  
+    data: {{new_list.1}}
+  },{
+    name: '3',
+    
+    data: {{new_list.2}}
+
+  },{
+    name: '4',
+    
+    data: {{new_list.3}}
+
+  },{
+    name: '5',
+   
+    data: {{new_list.4}}
+
+  },{
+    name: '6',
+   
+    data: {{new_list.5}}
+
+  },{
+    name: '7',
+    
+    data: {{new_list.6}}
+
+  }]
+});
+
+
+
+  </div>
+{% endblock %}

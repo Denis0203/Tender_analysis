@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>{% block title %}Мой сайт{% endblock %}</title>
+	<link rel="stylesheet" href="{% static 'css/normalize.css' %}" >
+	<link rel="stylesheet" href="{% static 'css/style.css' %}" >
+</head>
+<body>
+
+	<header class="header">
+		<nav class="navi">
+			<a class="main-header-logo" href="{% url 'main' %}">
+            	<img src= "{% static 'img/logo.png' %}" width="75" height="75" alt="Логотип">
+        	</a>
+       		<ul class="site-navigation">
+            	<li class="current-page"><a href="{% url 'main' %}">Главная</a></li>
+            	<li><a href="{% url 'index' %}">Просмотр тендеров</a></li>
+            	<li><a href="{% url 'contacts' %}">Контакты</a></li>
+            	<li><a href="{% url 'stats' %}">Аналитика</a></li>
+        	</ul>
+        	<div class="auth">
+				{% if user.is_authenticated %}
+    				<p>Пользователь: {{ user.get_username }}
+    				<a href="{% url 'logout'%}?next={{request.path}}" style="text-decoration: none;" > \ Выход</a></p>
+    			{% else %}
+    				<p><a href="{% url 'login'%}?next={{request.path}}" style="text-decoration: none;">Вход</a> /
+	    			<a href="{% url 'register'%}?next={{request.path}}" >Регистрация</a> / 
+	    			<a href="http://127.0.0.1:8000/watcher/admin/login/?next=/admin/" >Сотрудник</a> </p>
+    			{% endif %}
+			</div>
+		</nav>
+
+	</header>
+	
+	{% block content %}
+
+	
+	{% endblock %}
+	<div class="content"></div>
+	<footer class="footer">
+	<div class="line"></div>
+	<p>© 2010-2022 ООО "Комтендер"</p>
+	</footer>
+</body>
+</html>

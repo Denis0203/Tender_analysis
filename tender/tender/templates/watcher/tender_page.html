@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %} {{tender.name}} {% endblock %}
+
+{% block content %}
+
+<div class="inform" style=" margin-left: auto; margin-right: auto;">
+  <h3>Инормация о тендере №{{tender.idten}} от {{tender.data1}}</h3>
+  <p>Наименование: {{tender.name}}</p>
+  <p>Отрасль: {{tender.category}}</p>
+  <p>Начальная цена: {{tender.sum0}} рублей</p>
+  <p>Регион: {{tender.region}}</p> 
+  
+
+</div>
+
+{% endblock %}

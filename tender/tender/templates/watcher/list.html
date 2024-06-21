@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %} Список тендеров {% endblock %} <!-- Страница списка тендеров-->
+
+{% block content %}
+
+  <div class="tenders">
+  <p class="kolvo">Отрасли</p>
+
+        {% for category in  cat_list %}
+
+      <div class="category">
+
+          <p><a href="{% url 'category_page' category.idcategory  %}" >{{category.categorycol}}</a></p>
+          <!--<p>Количество тендеров: {{category.1}}  шт.</p>
+          <p>Стоимость от {{category.2}} до {{category.3}} рублей</p>
+          <p>Активных: {{category.4}} шт.</p>
+          <p>Архивных: {{category.5}} шт.</p>-->
+
+        </div> 
+
+    {% endfor %}
+
+  </div>
+
+{% endblock %}

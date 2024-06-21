@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %} {{name}} {% endblock %}
+
+{% block content %}
+
+ <div class="tenders">
+  {# <p>Количество тендеров: {{num_tenders}}</p> #}
+
+      <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+    <figure class="highcharts-figure">
+      <div id="container"></div>
+        <p class="highcharts-description">
+        </p>
+    </figure>
+
+   
+
+  <script type="text/javascript">
+
+      Highcharts.chart('container', {
+  chart: {
+    type: 'line'
+  },
+  title: {
+    text: ''
+  },
+  subtitle: {
+    text: ''
+  },
+  xAxis: {
+    categories: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май']
+  },
+  yAxis: {
+    title: {
+      text: 'Количество(шт.)'
+    }
+  },
+  plotOptions: {
+    line: {
+      dataLabels: {
+        enabled: true
+      },
+      enableMouseTracking: false
+    }
+  },
+  series: [{
+    name: 'Тендеры',
+    data: {{n}}
+  }]
+});
+
+    </script>
+
+    <p class="kolvo">Тендеры:</p>
+    {% for tender in tender_list %}
+
+      <div class="tender">
+
+        <div class="tender_num">
+          <p>Тендер №{{tender.idten}} от {{tender.data1}}</p>
+        </div>
+
+        <div class="tender_stat">
+          <a class="tender_name" href="{% url 'tender_page' tender.idten  %}" >{{tender.name}}</a>
+          <p class="tender_region" >{{tender.region}}</p>
+          <p class="tender_sum">{{tender.sum0}} рублей</p>
+          <p class="tender_status">Статус: {{tender.status}}</p>
+        </div>
+        <br>
+      </div> 
+      {% endfor %}
+  </div> 
+
+{% endblock %}
